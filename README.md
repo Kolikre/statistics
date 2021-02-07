@@ -1,2 +1,2 @@
-# statiscs
-This is my diplom project
+## HI! This is my diplom project 
+
