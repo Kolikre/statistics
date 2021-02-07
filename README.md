@@ -1,38 +1,69 @@
-# woms-chat-vue
-python => 3.6; django => 2; postgresql => 10; vue.js => 2
+## DISCUSSION 
 
-**Install python requirements**
+This project is using **Django(2+), Django Rest Framework & Vue Js/CLI** 
 
-pip install -r req.txt
+The type of this application is SPA (Single Page Application) that use **Session Authentication.** combine Django Framework & Vue JS.
 
-**Enter required secrets**
+And also support for **Token Based Authentication** (You can using Angular/ReactJs(Native)/Vue in separate service).
 
-- Create a copy of .env.template : `cp .env.template .env`
-- Enter key values in .env
+### Here these sample images of this application
 
-## Build Setup
+**Login page**
+![Login Page](re_cap/login.png)
 
-``` bash
-# go to the project directory vue
-cd chat-cue
+**Registration Page**
+![Registration Page](re_cap/registration.png)
 
-# install dependencies
-npm install
+**Forgot Password**
+![Forgot Password](re_cap/forgot-password.png)
 
-# serve with hot reload at localhost:8080
-npm run dev
+**Forgot link already sent**
+![Forgot link already sent](re_cap/email-already-sent.png)
 
-# build for production with minification
-npm run build
+**Form Change Password after click the link for Forgot password**
+![Form Change Password](re_cap/form-reset-password-email_click.png)
 
-# build for production and view the bundle analyzer report
-npm run build --report
+**Dashboard Page**
+![Dashboard Page](re_cap/dashboard.png)
+
+**Form Ask a Question Page**
+![Ask a Question Page](re_cap/ask-a-question.png)
+
+**Answer detail Page**
+![Answer Page](re_cap/answer-detail.png)
+
+## Hot to set up the project to run on your local machine?
+
+#### Download the code to your PC, unpack the zip and move inside the folder.
+
+#### Create a new Python Virtual Environment:
+```
+python3 -m venv venv
 ```
 
-**Video lessons**
+#### Activate the environment and install all the Python/Django dependencies:
 
-[YouTube](https://www.youtube.com/watch?v=kiKqDcNtkZ0&list=PLF-NY6ldwAWqP9PqPU3LA7mX2KJVyLhC_)
+```
+source ./venv/bin/activate
+pip install -m ./requirements.txt
+```
 
-[VK](https://vk.com/djangochannel)
+#### Apply the migrations as usual.
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+#### Time to install the Vue JS dependencies:
+```
+cd django-vue/frontend
+npm install
+```
+
+#### Run Vue JS Development Server:
+```
+npm run serve
+```
+
+#### Run Django's development server:
+```
+python manage.py runserver
+```
+
+#### Open up Chrome and go to 127.0.0.1:8000 and the app is now running in development mode!
