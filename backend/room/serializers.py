@@ -29,8 +29,6 @@ class TeamSerializers(serializers.ModelSerializer):
 class TeamPostSerializers(serializers.ModelSerializer):
     """ Серіалізація профіля корстувача """
 
-    # user = UserSerializers()
-    # players = PlayerPostSerializers(many=True, required=False)
 
     class Meta:
         model = Team
@@ -55,25 +53,12 @@ class PlayerSerializers(serializers.ModelSerializer):
 
 class PlayerPostSerializers(serializers.ModelSerializer):
     """ Серіалізація гравця для POST запиту"""
-    # user = UserSerializers()
-    # team = TeamSerializers()
 
     class Meta:
         model = Player
         fields = (
             'number', 'first_name', 'last_name', 'middle_name', 'role',
             'birthday', 'weight', 'height', 'attack', 'block',
-            'born_at', 'team_name', 'team_uuid'  #,'team_id'
+            'born_at', 'team_name', 'team_uuid'
 
         )
-
-
-# class CoachSerializers(serializers.ModelSerializer):
-#     """ Серіалізація тренера """
-#
-#     class Meta:
-#         model = Coach
-#         fields = (
-#             'first_name', 'last_name', 'middle_name', 'born_at', 'birthday',
-#             'is_main', 'ia_active', 'user_id'
-#         )
