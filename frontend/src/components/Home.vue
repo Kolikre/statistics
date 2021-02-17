@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1>Hello</h1>
+    <h1>Home page</h1>
     <button v-if="auth" @click="goLogout">Вийти</button>
     <div v-if="auth"><Team></Team></div>
 
@@ -8,12 +8,12 @@
 </template>
 
 <script>
-import Team from "@/components/Team"
+import Team from "@/components/Team";
 
 export default {
   name: 'Home',
   components: {
-    Team
+    Team,
   },
   computed: {
     auth() {
