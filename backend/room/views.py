@@ -2,7 +2,7 @@ from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 from rest_framework.generics import get_object_or_404
 from rest_framework.views import APIView
-from rest_framework import permissions, status
+from rest_framework import permissions
 from room.models import Team, Player
 from room.serializers import (PlayerPostSerializers, PlayerSerializers,
                               TeamPostSerializers, TeamSerializers)
@@ -21,7 +21,6 @@ class TeamView(APIView):
     def post(self, request):
         team_data = TeamPostSerializers(data=request.data)
         profile = Team.objects.filter(user=request.user)
-        print(team_data)
         if team_data.is_valid():
             if profile:
                 return Response({"status": "The team is not first"})
@@ -51,12 +50,16 @@ class PlayerView(APIView):
 
     def post(self, request):
         player_data = PlayerPostSerializers(data=request.data)
-
-        if player_data.is_valid():
-            player_data.save(user=request.user)
-            return Response(player_data.data)
+        players = Player.objects.filter(user=request.user)
+        print(players)
+        if len(players) >= 18:   # To do change this value
+            return Response({"status": "You have the maximum number of players"})
         else:
-            return Response(player_data.errors)
+            if player_data.is_valid():
+                player_data.save(user=request.user)
+                return Response({"status": True})
+            else:
+                return Response(player_data.errors)
 
 
 

@@ -2,7 +2,9 @@
   <div class="hello">
     <a>Team page</a>
     <div v-if="team">
-      {{team}}
+      <div>
+        {{team}}
+      </div>
     </div>
     <div v-else>
       <button class="btn btn--primary mx-auto" @click="$refs.modalName.openModal()">Створити команду</button>
@@ -67,7 +69,7 @@ const headers = {
 }
 
 export default {
-  name: 'Login',
+  name: 'Team',
   components: {
     Modal,
   },

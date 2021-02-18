@@ -14,29 +14,16 @@ class UserSerializers(serializers.ModelSerializer):
         )
 
 
-class TeamSerializers(serializers.Serializer):
+class TeamSerializers(serializers.ModelSerializer):
     """ Серіалізація профіля корстувача """
-    id = serializers.IntegerField()
-    name = serializers.CharField(max_length=120)
-    create_date = serializers.CharField()
-    league = serializers.CharField()
-    gender = serializers.CharField()
     user = UserSerializers()
 
-    def update(self, instance, validated_data):
-        instance.name = validated_data.get('name', instance.name)
-        instance.league = validated_data.get('league', instance.league)
-        instance.gender = validated_data.get('gender', instance.gender)
-        instance.user_id = validated_data.get('user_id', instance.user_id)
-
-        instance.save()
-        return instance
-    # class Meta:
-    #     model = Team
-    #     fields = (
-    #         'id', 'name', 'create_date', 'league', 'uuid',
-    #         'gender', 'is_active', 'user'
-    #     )
+    class Meta:
+        model = Team
+        fields = (
+            'id', 'name', 'create_date', 'league', 'uuid',
+            'gender', 'is_active', 'user'
+        )
 
 
 class TeamPostSerializers(serializers.ModelSerializer):

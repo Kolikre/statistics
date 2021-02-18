@@ -3,17 +3,19 @@
     <h1>Home page</h1>
     <button v-if="auth" @click="goLogout">Вийти</button>
     <div v-if="auth"><Team></Team></div>
-
+    <div v-if="auth"><Players></Players></div>
   </div>
 </template>
 
 <script>
 import Team from "@/components/Team";
+import Players from "@/components/Players";
 
 export default {
   name: 'Home',
   components: {
     Team,
+    Players,
   },
   computed: {
     auth() {

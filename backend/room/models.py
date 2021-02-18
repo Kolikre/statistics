@@ -61,7 +61,7 @@ class Player(models.Model):
     is_active = models.BooleanField(default=True)
     is_cap = models.BooleanField(default=False)
     team_name = models.CharField(verbose_name="Назва команди", max_length=255, null=True)
-    team_uuid = models.CharField(verbose_name="Назва команди", max_length=36, null=True)
+    team_uuid = models.CharField(verbose_name="uuid команди", max_length=36, null=True)
 
     def __str__(self):
         return f'№ {self.number} {self.first_name}'
