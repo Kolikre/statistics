@@ -8,12 +8,15 @@
       <button class="btn btn--primary mx-auto" @click="$refs.modalName.openModal()">Створити команду</button>
     </div>
 
+
+
     <modal ref="modalName">
       <template v-slot:header>
         <h1>Створити команду</h1>
       </template>
 
       <template v-slot:body>
+
         <form v-on:submit.prevent="submitForm">
                 <div class="form-group">
                     <label for="name">Вкажіть назву команди</label>
@@ -30,6 +33,7 @@
                     </select>
                 </div>
 
+
                 <div class="form-group">
                     <label for="gender">Виберіть стать гравців:</label>
                     <select id="gender" name="gender" v-model="form.data.attributes.gender">
@@ -43,7 +47,7 @@
       <template v-slot:footer>
         <div class="d-flex align-items-center justify-content-between">
           <button class="btn btn--secondary" @click="$refs.modalName.closeModal()">Відміна</button>
-          <button class="btn btn--primary" @click="submitForm">Зберегти</button>
+          <button class="btn btn--primary" @click="checkForm">Зберегти</button>
         </div>
       </template>
     </modal>
@@ -74,9 +78,9 @@ export default {
         data: {
           "type": "TeamView",
           "attributes": {
-            name: '',
-            league: '',
-            gender: ''
+            name: null,
+            league: null,
+            gender: null
           }
         }
       },
@@ -88,7 +92,6 @@ export default {
     });
     this.loadTeam()
   },
-
   methods: {
     loadTeam() {
       $.ajax({
@@ -103,17 +106,30 @@ export default {
         }
       });
     },
-    submitForm(){
+    submitForm() {
       axios.post('http://127.0.0.1:8000/api/v1/room/', this.form, {headers: headers})
-         .then((res) => {
-             console.log(res)
-         })
-         .catch((error) => {
-             console.log(error)
-         }).finally(() => {
-             //Perform action in always
-         });
-    }
+        .then((res) => {
+          console.log(res)
+          if (res.data.data.status == true) {
+            alert("Команду успішно створено");
+            window.location.reload()
+          } else {
+            alert("Сталась помилка");
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+        }).finally(() => {
+
+      });
+    },
+    checkForm: function(e) {
+      if (this.form.data.attributes.name && this.form.data.attributes.league && this.form.data.attributes.gender) {
+        this.submitForm()
+      } else {
+        alert("Будь ласка, заповніть всі поля")
+      }
+    },
   }
 }
 </script>

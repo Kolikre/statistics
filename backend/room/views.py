@@ -27,7 +27,7 @@ class TeamView(APIView):
                 return Response({"status": "The team is not first"})
             else:
                 team_data.save(user=request.user)
-            return Response(team_data.data)
+            return Response({"status": True})
         else:
             return Response(team_data.errors)
 

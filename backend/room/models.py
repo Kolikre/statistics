@@ -28,8 +28,8 @@ class Team(models.Model):
     gender = models.CharField(max_length=1, choices=GANDERS, default='M')
     is_active = models.BooleanField(default=True)
 
-    # def __str__(self):
-    #     return self.name
+    def __str__(self):
+        return self.name
 
 
 class Player(models.Model):

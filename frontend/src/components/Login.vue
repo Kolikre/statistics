@@ -28,9 +28,11 @@ export default {
           password: this.password
         },
         success: (response) => {
-          alert("Авторизовано!!!");
+          //alert("Авторизовано!!!");
           localStorage.setItem("auth_token", response.data.attributes.auth_token)
           this.$router.push({name: "Home"})
+          // console.log("reloaded")
+          window.location.reload()
         },
         error: (response) => {
           if (response.status === 400){

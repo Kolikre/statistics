@@ -161,8 +161,8 @@ REST_FRAMEWORK = {
 
 CORS_ORIGIN_ALLOW_ALL = True
 
-
-try:
-    from .local_settings import *
-except ImportError:
-    from .prod_settings import *
+#
+# try:
+#     from .local_settings import *
+# except ImportError:
+#     from .prod_settings import *
