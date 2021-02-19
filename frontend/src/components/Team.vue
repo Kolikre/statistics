@@ -101,6 +101,8 @@ export default {
         method: "GET",
         success: (response) => {
           this.team = response.data.response
+          sessionStorage.setItem("team_name", response.data.response[0].name)
+          sessionStorage.setItem("team_uuid", response.data.response[0].uuid)
           console.log(response)
           if (response.data.response == 0) {
             this.team = false

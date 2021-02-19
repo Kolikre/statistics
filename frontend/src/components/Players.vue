@@ -134,8 +134,8 @@ export default {
             born_at: null,
             is_active: true,
             is_cap: false,
-            team_name: null,
-            team_uuid: null
+            team_name: sessionStorage.getItem("team_name"),
+            team_uuid: sessionStorage.getItem("team_uuid")
           }
         }
       },
@@ -148,15 +148,6 @@ export default {
     this.loadPlayers()
   },
   methods: {
-    // loadTeam() {
-    //   $.ajax({
-    //     url: "http://127.0.0.1:8000/api/v1/room/",
-    //     method: "GET",
-    //     success: (response) => {
-    //       // Do something
-    //     }
-    //   });
-    // },
     loadPlayers() {
       $.ajax({
         url: this.store + "/api/v1/players/",
