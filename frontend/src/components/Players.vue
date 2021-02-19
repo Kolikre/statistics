@@ -2,7 +2,7 @@
   <div class="hello">
     <a>Players</a>
     <div>
-      <button class="btn btn--primary mx-auto" @click="$refs.modalName.openModal()">Додати гравця</button>
+      <button v-if="player_button" class="btn btn--primary mx-auto" @click="$refs.modalName.openModal()">Додати гравця</button>
       <ol>
         <li v-for="player in this.players">{{player}}}</li>
       </ol>
@@ -114,7 +114,9 @@ export default {
   },
   data() {
     return {
+      team_info: '',
       players: '',
+      player_button: '',
       form: {
         data: {
           "type": "PlayerView",
@@ -146,22 +148,27 @@ export default {
     this.loadPlayers()
   },
   methods: {
-    loadTeam() {
-      $.ajax({
-        url: "http://127.0.0.1:8000/api/v1/room/",
-        method: "GET",
-        success: (response) => {
-          // Do something
-        }
-      });
-    },
+    // loadTeam() {
+    //   $.ajax({
+    //     url: "http://127.0.0.1:8000/api/v1/room/",
+    //     method: "GET",
+    //     success: (response) => {
+    //       // Do something
+    //     }
+    //   });
+    // },
     loadPlayers() {
       $.ajax({
-        url: "http://127.0.0.1:8000/api/v1/players/",
+        url: this.store + "/api/v1/players/",
         method: "GET",
         success: (response) => {
           this.players = response.data.response
           console.log(response)
+          if (response.data.response.length >= 18){
+            this.player_button = false
+          } else {
+            this.player_button = true
+          }
         }
       });
     },

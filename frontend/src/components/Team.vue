@@ -97,7 +97,7 @@ export default {
   methods: {
     loadTeam() {
       $.ajax({
-        url: "http://127.0.0.1:8000/api/v1/room/",
+        url: this.store + "/api/v1/room/",
         method: "GET",
         success: (response) => {
           this.team = response.data.response
@@ -109,7 +109,7 @@ export default {
       });
     },
     submitForm() {
-      axios.post('http://127.0.0.1:8000/api/v1/room/', this.form, {headers: headers})
+      axios.post(this.store + '/api/v1/room/', this.form, {headers: headers})
         .then((res) => {
           console.log(res)
           if (res.data.data.status == true) {
