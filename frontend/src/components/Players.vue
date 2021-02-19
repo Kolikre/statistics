@@ -155,7 +155,7 @@ export default {
         success: (response) => {
           this.players = response.data.response
           console.log(response)
-          if (response.data.response.length >= 18){
+          if (response.data.response.length >= 18 || !sessionStorage.getItem("team_name")){
             this.player_button = false
           } else {
             this.player_button = true

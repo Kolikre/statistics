@@ -10,8 +10,6 @@
       <button class="btn btn--primary mx-auto" @click="$refs.modalName.openModal()">Створити команду</button>
     </div>
 
-
-
     <modal ref="modalName">
       <template v-slot:header>
         <h1>Створити команду</h1>
@@ -101,11 +99,12 @@ export default {
         method: "GET",
         success: (response) => {
           this.team = response.data.response
-          sessionStorage.setItem("team_name", response.data.response[0].name)
-          sessionStorage.setItem("team_uuid", response.data.response[0].uuid)
           console.log(response)
           if (response.data.response == 0) {
             this.team = false
+          } else {
+            sessionStorage.setItem("team_name", response.data.response[0].name)
+            sessionStorage.setItem("team_uuid", response.data.response[0].uuid)
           }
         }
       });

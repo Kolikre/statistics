@@ -79,9 +79,6 @@ export default {
     display: flex;
     flex-direction: column;
     z-index: 2;
-    @media screen and (max-width: 992px) {
-      width: 90%;
-    }
 }
 .modal__close {
     width: 30px;
