@@ -50,7 +50,7 @@
         <div class="form-group row">
           <label for="role" class="col-sm-3 col-form-label">Амплуа:</label>
           <div class="col-sm-9">
-            <select class="custom-select" id="role">
+            <select class="custom-select" id="role">с
   <!--            <option selected>Виберіть амплуа</option>-->
               <option value="OS">Діагональний</option>
               <option value="OH">Догравальний</option>
@@ -61,7 +61,21 @@
           </div>
         </div>
 
-        <div class="form-group col-sm-10 form-row center">
+        <div class="form-group row">
+          <label for="example-date-input" class="col-sm-3 col-form-label">Дата народження: </label>
+          <div class="col-sm-9">
+            <input class="form-control" type="date" value="2000-04-11" id="example-date-input" v-model="form.data.attributes.birthday">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="born_at" class="col-sm-3 col-form-label">Місце народження:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="born_at" placeholder="Місце народження" v-model="form.data.attributes.born_at">
+          </div>
+        </div>
+
+        <div class="form-row">
           <div class="form-group col-md-3">
             <label for="weight">Вага в кг:</label>
             <input type="number" class="form-control" id="weight" placeholder="Вага" v-model="form.data.attributes.weight">
@@ -82,6 +96,12 @@
             <input type="number" class="form-control" id="block" placeholder="Висота блоку" v-model="form.data.attributes.block">
           </div>
         </div>
+
+        <div class="d-flex justify-content-end">
+          <input class="form-check-input" type="checkbox" id="inlineCheckbox1" v-model="form.data.attributes.is_cap">
+          <label class="form-check-label" for="inlineCheckbox1">Капітан</label>
+        </div>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Відміна</button>
