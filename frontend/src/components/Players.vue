@@ -17,22 +17,69 @@
         </button>
       </div>
       <div class="modal-body">
-          <div class="form-group row">
-            <label for="inputZip" class="col-sm-2 col-form-label">Номер футболки</label>
-              <div class="col-sm-2">
-                <input type="number" class="form-control" id="inputZip" v-model="form.data.attributes.number>
-              </div>
-          </div>
+
+        <!-- MODAL CONTENT -->
         <div class="form-group row">
-          <label for="inputEmail3" class="col-sm-2 col-form-label">Призвіще:</label>
-          <div class="col-sm-10">
-            <input type="email" class="form-control" id="inputEmail3" placeholder="Призвіще" v-model="form.data.attributes.first_name">
+          <label for="number" class="col-sm-3 col-form-label">Номер футболки:</label>
+          <div class="col-sm-2">
+            <input type="number" class="form-control" id="number"  v-model="form.data.attributes.number">
           </div>
         </div>
+
         <div class="form-group row">
-          <label for="inputPassword3" class="col-sm-2 col-form-label">Ім'я:</label>
-          <div class="col-sm-10">
-            <input type="password" class="form-control" id="inputPassword3" placeholder="Ім'я">
+          <label for="first_name" class="col-sm-3 col-form-label">Призвіще:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="first_name" placeholder="Призвіще" v-model="form.data.attributes.first_name">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="last_name" class="col-sm-3 col-form-label">Ім'я:</label>
+          <div class="col-sm-9">
+            <input type="password" class="form-control" id="last_name" placeholder="Ім'я" v-model="form.data.attributes.last_name">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="middle_name" class="col-sm-3 col-form-label">По-батькові:</label>
+          <div class="col-sm-9">
+            <input type="password" class="form-control" id="middle_name" placeholder="По-батькові" v-model="form.data.attributes.middle_name">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="role" class="col-sm-3 col-form-label">Амплуа:</label>
+          <div class="col-sm-9">
+            <select class="custom-select" id="role">
+  <!--            <option selected>Виберіть амплуа</option>-->
+              <option value="OS">Діагональний</option>
+              <option value="OH">Догравальний</option>
+              <option value="ST">Пасуючий</option>
+              <option value="MB">Центральний блокуючий</option>
+              <option value="LB">Ліберо</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group col-sm-10 form-row center">
+          <div class="form-group col-md-3">
+            <label for="weight">Вага в кг:</label>
+            <input type="number" class="form-control" id="weight" placeholder="Вага" v-model="form.data.attributes.weight">
+          </div>
+
+          <div class="form-group col-md-3">
+            <label for="height">Висота в см:</label>
+            <input type="number" class="form-control" id="height" placeholder="Висота" v-model="form.data.attributes.height">
+          </div>
+
+          <div class="form-group col-md-3">
+            <label for="attack">Висота атаки в см:</label>
+            <input type="number" class="form-control" id="attack" placeholder="Висота атаки" v-model="form.data.attributes.attack">
+          </div>
+
+          <div class="form-group col-md-3">
+            <label for="block">Висота блоку в см:</label>
+            <input type="number" class="form-control" id="block" placeholder="Висота блоку" v-model="form.data.attributes.block">
           </div>
         </div>
       </div>
