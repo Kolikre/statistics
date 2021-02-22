@@ -3,6 +3,7 @@
     <h1>Home page</h1>
     <button v-if="auth" @click="goLogout">Вийти</button>
     <div v-if="auth"><Team></Team></div>
+<!--    <a href="/players/">Players</a>-->
     <div v-if="auth"><Players></Players></div>
   </div>
 </template>
