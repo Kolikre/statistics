@@ -5,7 +5,7 @@ import App from './App'
 import router from './router'
 
 Vue.config.productionTip = false
-
+Vue.store= Vue.prototype.store = 'http://127.0.0.1:8000'
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

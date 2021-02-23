@@ -9,7 +9,7 @@ from room.serializers import (PlayerPostSerializers, PlayerSerializers,
 
 
 class TeamView(APIView):
-    """ User profile """
+    """ Team profile """
 
     permission_classes = [permissions.IsAuthenticated]
 
@@ -21,23 +21,27 @@ class TeamView(APIView):
     def post(self, request):
         team_data = TeamPostSerializers(data=request.data)
         profile = Team.objects.filter(user=request.user)
-
         if team_data.is_valid():
             if profile:
                 return Response({"status": "The team is not first"})
             else:
                 team_data.save(user=request.user)
-            return Response(team_data.data)
+            return Response({"status": True})
         else:
             return Response(team_data.errors)
+
+    def put(self, request):
+        saved_article = get_object_or_404(Team.objects.filter(user=request.user))
+        data = request.data.get('team')
+        serializer = TeamPostSerializers(instance=saved_article, data=data, partial=True)
+        if serializer.is_valid(raise_exception=True):
+            team_saved = serializer.save()
+        return Response({"success": "Team '{}' updated successfully".format(team_saved.name)})
 
 
 class PlayerView(APIView):
     """ Player  """
-
-    # parser_classes = [JSONParser]
     permission_classes = [permissions.IsAuthenticated]
-    # permission_classes = [permissions.AllowAny]
 
     def get(self, request):
         player_profile = Player.objects.filter(user=request.user)
@@ -46,12 +50,17 @@ class PlayerView(APIView):
 
     def post(self, request):
         player_data = PlayerPostSerializers(data=request.data)
-
-        if player_data.is_valid():
-            player_data.save(user=request.user)
-            return Response(player_data.data)
+        players = Player.objects.filter(user=request.user)
+        print(players)
+        if len(players) >= 18:   # To do change this value
+            return Response({"status": "You have the maximum number of players"})
         else:
-            return Response(player_data.errors)
+            if player_data.is_valid():
+                player_data.save(user=request.user)
+                return Response({"status": True})
+            else:
+                return Response(player_data.errors)
+
 
 
 # class CoachView(APIView):
