@@ -2,9 +2,15 @@
   <div class="hello">
     <h1>Home page</h1>
     <button v-if="auth" @click="goLogout">Вийти</button>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
     <div v-if="auth"><Team></Team></div>
-<!--    <a href="/players/">Players</a>-->
-    <div v-if="auth"><Players></Players></div>
+    <div ><Players></Players></div>
   </div>
 </template>
 
@@ -24,6 +30,13 @@ export default {
         return true
       } else {
         this.$router.push({name: "Login"})
+      }
+    },
+    team() {
+      if(localStorage.getItem("team_is_created")){
+        return true
+      } else {
+        return false
       }
     }
   },

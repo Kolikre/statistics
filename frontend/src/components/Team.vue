@@ -1,56 +1,80 @@
 <template>
   <div class="hello">
-    <a>Team page</a>
+
     <div v-if="team">
       <div>
-        {{team}}
+        <h1>{{team_name}}</h1>
+        <!--  localStorage.setItem("team_is_created", true)  -->
       </div>
     </div>
     <div v-else>
-      <button class="btn btn--primary mx-auto" @click="$refs.modalName.openModal()">Створити команду</button>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+        Створити команду
+      </button>
     </div>
 
-    <modal ref="modalName">
-      <template v-slot:header>
-        <h1>Створити команду</h1>
-      </template>
 
-      <template v-slot:body>
 
-        <form v-on:submit.prevent="submitForm">
-                <div class="form-group">
-                    <label for="name">Вкажіть назву команди</label>
-                    <input type="text" class="form-control" id="name" placeholder="Назва команди" v-model="form.data.attributes.name">
+
+    <!-- MODAL WINDOW -->
+
+      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Створення команди</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+
+
+              <!-- MODAL CONTENT -->
+              <div class="container">
+                <div class="form-group row">
+                  <label for="team_name" class="col-sm-4 col-form-label">Назва команди:</label>
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" id="team-name" placeholder="Введіть назву" v-model="form.data.attributes.name">
+                  </div>
                 </div>
-                <div class="form-group">
-                    <label for="leagues">Виберіть лігу:</label>
-                    <select id="leagues" name="league" v-model="form.data.attributes.league">
-                        <option value="super">Супер ліга</option>
-                        <option value="high">Вища ліга</option>
-                        <option value="first">Перша ліга</option>
-                        <option value="second">Друга ліга</option>
-                        <option value="student">Студентська ліга</option>
+
+                <div class="form-group row">
+                  <label for="role" class="col-sm-4 col-form-label">Ліга:</label>
+                  <div class="col-sm-12">
+                    <select class="custom-select" id="role" v-model="form.data.attributes.league">с
+                  <!--<option selected>Виберіть амплуа</option>-->
+                      <option value="super">Супер</option>
+                      <option value="high">Вища</option>
+                      <option value="first">Перша</option>
+                      <option value="second">Друга</option>
+                      <option value="student">Студентська</option>
                     </select>
+                  </div>
                 </div>
 
-
-                <div class="form-group">
-                    <label for="gender">Виберіть стать гравців:</label>
-                    <select id="gender" name="gender" v-model="form.data.attributes.gender">
-                        <option value="M">Чоловіча</option>
-                        <option value="W">Жіноча</option>
+                <div class="form-group row">
+                  <label for="gender" class="col-sm-4 col-form-label">Виберіть стать:</label>
+                  <div class="col-sm-12">
+                    <select class="custom-select" id="gender" v-model="form.data.attributes.gender">
+                  <!--<option selected>Виберіть амплуа</option>-->
+                      <option value="W">Жінки</option>
+                      <option value="M">Чоловіки</option>
                     </select>
+                  </div>
                 </div>
-        </form>
-      </template>
+              </div>
 
-      <template v-slot:footer>
-        <div class="d-flex align-items-center justify-content-between">
-          <button class="btn btn--secondary" @click="$refs.modalName.closeModal()">Відміна</button>
-          <button class="btn btn--primary" @click="checkForm">Зберегти</button>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Відміна</button>
+              <button type="button" class="btn btn-primary" @click="checkForm">Зберегти</button>
+            </div>
+          </div>
         </div>
-      </template>
-    </modal>
+      </div>
+
+
   </div>
 
 
@@ -74,6 +98,7 @@ export default {
   data() {
     return {
       team: '',
+      team_name: '',
       form: {
         data: {
           "type": "TeamView",
@@ -99,7 +124,7 @@ export default {
         method: "GET",
         success: (response) => {
           this.team = response.data.response
-          console.log(response)
+          this.team_name = response.data.response[0].name
           if (response.data.response == 0) {
             this.team = false
           } else {

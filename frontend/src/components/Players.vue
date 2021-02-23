@@ -1,10 +1,14 @@
 <template>
   <div class="hello">
 
+    <ol>
+      <li v-for="player in this.players">{{player}}}</li>
+    </ol>
+
     <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
-  Add new player
-</button>
+    <button v-if="player_button" type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
+      Add new player
+    </button>
 
 <!-- Modal -->
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -36,21 +40,21 @@
         <div class="form-group row">
           <label for="last_name" class="col-sm-3 col-form-label">Ім'я:</label>
           <div class="col-sm-9">
-            <input type="password" class="form-control" id="last_name" placeholder="Ім'я" v-model="form.data.attributes.last_name">
+            <input type="text" class="form-control" id="last_name" placeholder="Ім'я" v-model="form.data.attributes.last_name">
           </div>
         </div>
 
         <div class="form-group row">
           <label for="middle_name" class="col-sm-3 col-form-label">По-батькові:</label>
           <div class="col-sm-9">
-            <input type="password" class="form-control" id="middle_name" placeholder="По-батькові" v-model="form.data.attributes.middle_name">
+            <input type="text" class="form-control" id="middle_name" placeholder="По-батькові" v-model="form.data.attributes.middle_name">
           </div>
         </div>
 
         <div class="form-group row">
           <label for="role" class="col-sm-3 col-form-label">Амплуа:</label>
           <div class="col-sm-9">
-            <select class="custom-select" id="role">с
+            <select class="custom-select" id="role" v-model="form.data.attributes.role">
   <!--            <option selected>Виберіть амплуа</option>-->
               <option value="OS">Діагональний</option>
               <option value="OH">Догравальний</option>
@@ -105,7 +109,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Відміна</button>
-        <button type="button" class="btn btn-primary">Зберегти</button>
+        <button type="button" class="btn btn-primary" @click="checkForm">Зберегти</button>
       </div>
     </div>
   </div>
@@ -199,7 +203,7 @@
 <!--      <template v-slot:footer>-->
 <!--        <div class="d-flex align-items-center justify-content-between">-->
 <!--          <button class="btn btn&#45;&#45;secondary" @click="$refs.modalName.closeModal()">Відміна</button>-->
-<!--          <button class="btn btn&#45;&#45;primary" @click="checkForm">Зберегти</button>-->
+<!--          <button class="btn btn&#45;&#45;primary" @click="submitForm">Зберегти</button>-->
 <!--        </div>-->
 <!--      </template>-->
 <!--    </modal>-->
