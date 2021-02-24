@@ -1,5 +1,13 @@
 <template>
-  <div class="container">
+  <div class="container" >
+    </br>
+    </br>
+    <!-- Button trigger modal -->
+    <button v-if="player_button" type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
+      Add new player
+    </button>
+    </br>
+    </br>
 
     <table class="table table-hover">
       <thead>
@@ -28,13 +36,9 @@
       </tbody>
     </table>
 
-    <!-- Button trigger modal -->
-    <button v-if="player_button" type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
-      Add new player
-    </button>
 
 <!-- Modal -->
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal-lg" id="modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -301,13 +305,16 @@ export default {
         }
       });
     },
-    submitForm() {
+    submitForm: function(b) {
       axios.post('http://127.0.0.1:8000/api/v1/players/', this.form, {headers: headers})
         .then((res) => {
           console.log(res)
           if (res.data.data.status == true) {
             alert("Гравця успішно створено");
-            window.location.reload()
+            // Close modal on button click
+            $('#modal').hide();
+            $('.modal-backdrop').hide();
+            this.loadPlayers()
           } else {
             alert("Сталась помилка");
           }

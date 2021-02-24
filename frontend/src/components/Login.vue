@@ -51,7 +51,7 @@ export default {
           localStorage.setItem("auth_token", response.data.attributes.auth_token)
           this.$router.push({name: "Home"})
           // console.log("reloaded")
-          window.location.reload()
+          //window.location.reload()
         },
         error: (response) => {
           if (response.status === 400){
