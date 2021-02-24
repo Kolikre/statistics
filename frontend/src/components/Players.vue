@@ -1,9 +1,32 @@
 <template>
-  <div class="hello">
+  <div class="container">
 
-    <ol>
-      <li v-for="player in this.players">{{player}}}</li>
-    </ol>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Гравець</th>
+          <th scope="col">Амплуа</th>
+          <th scope="col">Висота</th>
+          <th scope="col">Вага</th>
+          <th scope="col">Висота атаки</th>
+          <th scope="col">Висота блоку</th>
+          <th scope="col">Капітан</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="player in this.players">
+          <th scope="row">{{player.number}}</th>
+          <td>{{player.first_name}} {{player.last_name}}</td>
+          <td>{{player.role}}</td>
+          <td>{{player.height}}</td>
+          <td>{{player.weight}}</td>
+          <td>{{player.attack}}</td>
+          <td>{{player.block}}</td>
+          <td>{{player.is_cap}}</td>
+        </tr>
+      </tbody>
+    </table>
 
     <!-- Button trigger modal -->
     <button v-if="player_button" type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
