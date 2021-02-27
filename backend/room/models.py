@@ -67,21 +67,22 @@ class Player(models.Model):
         return f'№ {self.number} {self.first_name}'
 
 
+class Coach(models.Model):
+    """ Тренер """
+    #team = models.ForeignKey(Team, verbose_name='Команда', on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(User, verbose_name="Власник профілю", on_delete=models.CASCADE, null=True)
+    first_name = models.CharField(verbose_name='Ім`я', max_length=64)
+    last_name = models.CharField(verbose_name='Призвіще', max_length=64)
+    middle_name = models.CharField(verbose_name='По-батькові', max_length=64)
+    birthday = models.DateField()
+    is_main = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    born_at = models.CharField(verbose_name='Місце народження', max_length=255)
+    phone = models.IntegerField(verbose_name="Номер телефону")
+    team_name = models.CharField(verbose_name="Назва команди", max_length=255, null=True)
+    team_uuid = models.CharField(verbose_name="uuid команди", max_length=36, null=True)
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False)
 
-# class Coach(models.Model):
-#     """ Тренер """
-#     team = models.ForeignKey(Team, verbose_name='Команда', on_delete=models.CASCADE, null=True)
-#     # user = models.ForeignKey(User, verbose_name="Власник профілю", on_delete=models.CASCADE, null=True)
-#     first_name = models.CharField(verbose_name='Ім`я', max_length=64)
-#     last_name = models.CharField(verbose_name='Призвіще', max_length=64)
-#     middle_name = models.CharField(verbose_name='По-батькові', max_length=64)
-#     birthday = models.DateField()
-#     is_main = models.BooleanField(default=False)
-#     is_active = models.BooleanField(default=True)
-#     born_at = models.CharField(verbose_name='Місце народження', max_length=255)
-#     phone = models.PositiveIntegerField(verbose_name="Номер телефону", validators=[MaxValueValidator(10)])
-#     # team_id = models.PositiveIntegerField(verbose_name="ID Команди",  validators=[MaxValueValidator(99999)])
-#
-#     def __str__(self):
-#         return self.first_name, self.is_main
+    def __str__(self):
+        return self.first_name, self.is_main
 
