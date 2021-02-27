@@ -3,8 +3,9 @@ from rest_framework.response import Response
 from rest_framework.generics import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework import permissions
-from room.models import Team, Player
-from room.serializers import (PlayerPostSerializers, PlayerSerializers,
+from room.models import Coach, Team, Player
+from room.serializers import (CoachSerializers,  CoachPostSerializers,
+                              PlayerPostSerializers, PlayerSerializers,
                               TeamPostSerializers, TeamSerializers)
 
 
@@ -62,11 +63,23 @@ class PlayerView(APIView):
                 return Response(player_data.errors)
 
 
+class CoachView(APIView):
+    """ Coach  """
+    permission_classes = [permissions.IsAuthenticated]
 
-# class CoachView(APIView):
-#     """ Coach """
-#
-#     def get(self, request):
-#         coaches = Coach.object.filter(user=request.user)
-#         serializer = CoachSerializers(coaches, data=request.data)
-#         return Response({"response": serializer.data})
+    def get(self, request):
+        coach_profiles = Coach.objects.filter(user=request.user)
+        serializer = CoachSerializers(coach_profiles, many=True)
+        return Response({"response": serializer.data})
+
+    def post(self, request):
+        coach_post_data = CoachPostSerializers(data=request.data)
+        # coaches = Coach.objects.filter(user=request.user)
+        # if len(players) >= 18:   # To do change this value
+        #     return Response({"status": "You have the maximum number of players"})
+        # else:
+        if coach_post_data.is_valid():
+            coach_post_data.save(user=request.user)
+            return Response({"status": True})
+        else:
+            return Response(coach_post_data.errors)
