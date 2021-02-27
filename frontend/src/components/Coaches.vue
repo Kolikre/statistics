@@ -3,7 +3,7 @@
     </br>
 
     <!-- Button trigger modal -->
-    <button v-if="coach_button" type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
+    <button v-if="coach_button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
       Додати нового тренера
     </button>
     </br>
@@ -28,12 +28,12 @@
 
 
     <!-- Modal -->
-    <div class="modal fade bd-example-modal-lg" id="modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="cexampleModalLabel">Створення Тренера</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Закрити">
+            <h5 class="modal-title" id="exampleModalLabel">Створення тренера</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -42,37 +42,44 @@
             <!-- MODAL CONTENT -->
 
             <div class="form-group row">
-              <label for="cfirst_name" class="col-sm-3 col-form-label">Призвіще:</label>
-              <div class="col-sm-9">
+              <label for="cfirst_name" class="col-sm-5 col-form-label">Призвіще:</label>
+              <div class="col-sm-7">
                 <input type="text" class="form-control" id="cfirst_name" placeholder="Призвіще" v-model="form.data.attributes.first_name">
               </div>
             </div>
 
             <div class="form-group row">
-              <label for="clast_name" class="col-sm-3 col-form-label">Ім'я:</label>
-              <div class="col-sm-9">
+              <label for="clast_name" class="col-sm-5 col-form-label">Ім'я:</label>
+              <div class="col-sm-7">
                 <input type="text" class="form-control" id="clast_name" placeholder="Ім'я" v-model="form.data.attributes.last_name">
               </div>
             </div>
 
             <div class="form-group row">
-              <label for="cmiddle_name" class="col-sm-3 col-form-label">По-батькові:</label>
-              <div class="col-sm-9">
+              <label for="cmiddle_name" class="col-sm-5 col-form-label">По-батькові:</label>
+              <div class="col-sm-7">
                 <input type="text" class="form-control" id="cmiddle_name" placeholder="По-батькові" v-model="form.data.attributes.middle_name">
               </div>
             </div>
 
             <div class="form-group row">
-              <label for="cexample-date-input" class="col-sm-3 col-form-label">Дата народження: </label>
-              <div class="col-sm-9">
-                <input class="form-control" type="date" value="2000-04-11" id="cexample-date-input" v-model="form.data.attributes.c_birthday">
+              <label for="cphone" class="col-sm-5 col-form-label">Номер телефону:</label>
+              <div class="col-sm-7">
+                <input type="number" class="form-control" id="cphone" placeholder="Телефон" v-model="form.data.attributes.phone">
               </div>
             </div>
 
             <div class="form-group row">
-              <label for="cborn_at" class="col-sm-3 col-form-label">Місце народження:</label>
-              <div class="col-sm-9">
-                <input type="text" class="form-control" id="cborn_at" placeholder="Місце народження" v-model="form.data.attributes.c_born_at">
+              <label for="cexample-date-input" class="col-sm-5 col-form-label">Дата народження: </label>
+              <div class="col-sm-7">
+                <input class="form-control" type="date" value="2000-04-11" id="cexample-date-input" v-model="form.data.attributes.birthday">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="cborn_at" class="col-sm-5 col-form-label">Місце народження:</label>
+              <div class="col-sm-7">
+                <input type="text" class="form-control" id="cborn_at" placeholder="Місце народження" v-model="form.data.attributes.born_at">
               </div>
             </div>
 
@@ -164,7 +171,7 @@ export default {
         .then((res) => {
           console.log(res)
           if (res.data.data.status == true) {
-            alert("Гравця успішно створено");
+            alert("Тренера успішно створено");
             // Close modal on button click
             $('.modal').hide();
             $('.modal-backdrop').hide();
