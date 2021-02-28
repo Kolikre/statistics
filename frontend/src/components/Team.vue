@@ -101,7 +101,7 @@ export default {
       team_name: '',
       form: {
         data: {
-          "type": "TeamView",
+          "type": "teams",
           "attributes": {
             name: null,
             league: null,

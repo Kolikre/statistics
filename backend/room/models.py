@@ -84,5 +84,5 @@ class Coach(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False)
 
     def __str__(self):
-        return self.first_name, self.is_main
+        return self.first_name
 

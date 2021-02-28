@@ -127,7 +127,7 @@ export default {
       coach_button: '',
       form: {
         data: {
-          "type": "CoachView",
+          "type": "coaches_list",
           "attributes": {
             c_first_name: null,
             c_last_name: null,

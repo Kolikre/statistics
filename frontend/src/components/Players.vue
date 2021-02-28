@@ -169,7 +169,7 @@ export default {
       player_button: '',
       form: {
         data: {
-          "type": "PlayerView",
+          "type": "players_list",
           "attributes": {
             number: null,
             first_name: null,
