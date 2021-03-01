@@ -32,6 +32,32 @@ def teams(request):
             return Response(team_data.errors)
 
 
+@api_view(['GET', 'PUT', 'DELETE'])
+def team(request, pk):
+    """
+    Retrieve, update or delete a code snippet.
+    """
+    try:
+        team = Team.objects.get(pk=pk)
+    except Team.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = TeamSerializers(team)
+        return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = TeamPostSerializers(team, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        team.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
 @api_view(['GET', 'POST'])
 def players_list(request):
     """
@@ -104,3 +130,29 @@ def coaches_list(request):
             return Response({"status": True})
         else:
             return Response(coach_data.errors)
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def coach_detail(request, pk):
+    """
+    Retrieve, update or delete a code snippet.
+    """
+    try:
+        coach = Coach.objects.get(pk=pk)
+    except Coach.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = CoachSerializers(coach)
+        return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = CoachPostSerializers(coach, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        coach.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
