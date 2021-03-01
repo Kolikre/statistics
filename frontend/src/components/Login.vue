@@ -48,9 +48,9 @@ export default {
         },
         success: (response) => {
           //alert("Авторизовано!!!");
-          localStorage.setItem("auth_token", response.data.attributes.auth_token)
+          localStorage.setItem("auth_token", response.auth_token)
           this.$router.push({name: "Home"})
-          // console.log("reloaded")
+          console.log(response)
           //window.location.reload()
         },
         error: (response) => {

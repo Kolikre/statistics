@@ -1,16 +1,12 @@
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
-from rest_framework.generics import get_object_or_404
-from rest_framework.views import APIView
+from rest_framework import status
+from rest_framework.decorators import api_view
 from rest_framework import permissions
 from room.models import Coach, Team, Player
 from room.serializers import (CoachSerializers,  CoachPostSerializers,
                               PlayerPostSerializers, PlayerSerializers,
                               TeamPostSerializers, TeamSerializers)
-
-
-from rest_framework import status
-from rest_framework.decorators import api_view
 
 
 @api_view(['GET', 'POST'])
@@ -21,7 +17,7 @@ def teams(request):
     if request.method == 'GET':
         snippets = Team.objects.all()
         serializer = TeamSerializers(snippets, many=True)
-        return Response({"response": serializer.data})
+        return Response(serializer.data)
 
     elif request.method == 'POST':
         team_data = TeamPostSerializers(data=request.data)
@@ -44,7 +40,7 @@ def players_list(request):
     if request.method == 'GET':
         players = Player.objects.filter(user=request.user)
         serializer = PlayerSerializers(players, many=True)
-        return Response({"response": serializer.data})
+        return Response(serializer.data)
 
     elif request.method == 'POST':
         player_data = PlayerPostSerializers(data=request.data)
@@ -60,6 +56,32 @@ def players_list(request):
                 return Response(player_data.errors)
 
 
+@api_view(['GET', 'PUT', 'DELETE'])
+def player_detail(request, pk):
+    """
+    Retrieve, update or delete a code snippet.
+    """
+    try:
+        player = Player.objects.get(pk=pk)
+    except Player.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = PlayerSerializers(player)
+        return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = PlayerPostSerializers(player, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        player.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
 @api_view(['GET', 'POST'])
 def coaches_list(request):
     """
@@ -68,7 +90,7 @@ def coaches_list(request):
     if request.method == 'GET':
         players = Coach.objects.filter(user=request.user)
         serializer = CoachSerializers(players, many=True)
-        return Response({"response": serializer.data})
+        return Response(serializer.data)
 
     elif request.method == 'POST':
         coach_data = CoachPostSerializers(data=request.data)

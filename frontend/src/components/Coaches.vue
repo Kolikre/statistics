@@ -44,48 +44,48 @@
             <div class="form-group row">
               <label for="cfirst_name" class="col-sm-5 col-form-label">Призвіще:</label>
               <div class="col-sm-7">
-                <input type="text" class="form-control" id="cfirst_name" placeholder="Призвіще" v-model="form.data.attributes.first_name">
+                <input type="text" class="form-control" id="cfirst_name" placeholder="Призвіще" v-model="form.first_name">
               </div>
             </div>
 
             <div class="form-group row">
               <label for="clast_name" class="col-sm-5 col-form-label">Ім'я:</label>
               <div class="col-sm-7">
-                <input type="text" class="form-control" id="clast_name" placeholder="Ім'я" v-model="form.data.attributes.last_name">
+                <input type="text" class="form-control" id="clast_name" placeholder="Ім'я" v-model="form.last_name">
               </div>
             </div>
 
             <div class="form-group row">
               <label for="cmiddle_name" class="col-sm-5 col-form-label">По-батькові:</label>
               <div class="col-sm-7">
-                <input type="text" class="form-control" id="cmiddle_name" placeholder="По-батькові" v-model="form.data.attributes.middle_name">
+                <input type="text" class="form-control" id="cmiddle_name" placeholder="По-батькові" v-model="form.middle_name">
               </div>
             </div>
 
             <div class="form-group row">
               <label for="cphone" class="col-sm-5 col-form-label">Номер телефону:</label>
               <div class="col-sm-7">
-                <input type="number" class="form-control" id="cphone" placeholder="Телефон" v-model="form.data.attributes.phone">
+                <input type="number" class="form-control" id="cphone" placeholder="Телефон" v-model="form.phone">
               </div>
             </div>
 
             <div class="form-group row">
               <label for="cexample-date-input" class="col-sm-5 col-form-label">Дата народження: </label>
               <div class="col-sm-7">
-                <input class="form-control" type="date" value="2000-04-11" id="cexample-date-input" v-model="form.data.attributes.birthday">
+                <input class="form-control" type="date" value="2000-04-11" id="cexample-date-input" v-model="form.birthday">
               </div>
             </div>
 
             <div class="form-group row">
               <label for="cborn_at" class="col-sm-5 col-form-label">Місце народження:</label>
               <div class="col-sm-7">
-                <input type="text" class="form-control" id="cborn_at" placeholder="Місце народження" v-model="form.data.attributes.born_at">
+                <input type="text" class="form-control" id="cborn_at" placeholder="Місце народження" v-model="form.born_at">
               </div>
             </div>
 
 
             <div class="d-flex justify-content-end">
-              <input class="form-check-input" type="checkbox" id="cinlineCheckbox1" v-model="form.data.attributes.is_main">
+              <input class="form-check-input" type="checkbox" id="cinlineCheckbox1" v-model="form.is_main">
               <label class="form-check-label" for="cinlineCheckbox1">Головний</label>
             </div>
 
@@ -110,7 +110,7 @@ import Modal from "@/components/Modal";
 import axios from 'axios';
 
 const headers = {
-  'Content-Type': 'application/vnd.api+json',
+  'Content-Type': 'application/json',
   'Authorization': 'Token ' + localStorage.getItem('auth_token')
 }
 
@@ -126,9 +126,6 @@ export default {
       coaches: '',
       coach_button: '',
       form: {
-        data: {
-          "type": "coaches_list",
-          "attributes": {
             c_first_name: null,
             c_last_name: null,
             c_middle_name: null,
@@ -139,8 +136,6 @@ export default {
             is_main: false,
             team_name: sessionStorage.getItem("team_name"),
             team_uuid: sessionStorage.getItem("team_uuid")
-          }
-        }
       },
     }
   },
@@ -156,9 +151,9 @@ export default {
         url: this.store + "/api/v1/coaches/",
         method: "GET",
         success: (response) => {
-          this.coaches = response.data.response
+          this.coaches = response
           console.log(response)
-          if (response.data.response.length >= 10 || !sessionStorage.getItem("team_name")){
+          if (response.length >= 10 || !sessionStorage.getItem("team_name")){
             this.coach_button = false
           } else {
             this.coach_button = true
@@ -170,7 +165,7 @@ export default {
       axios.post(this.store + '/api/v1/coaches/', this.form, {headers: headers})
         .then((res) => {
           console.log(res)
-          if (res.data.data.status == true) {
+          if (res.data.status == true) {
             alert("Тренера успішно створено");
             // Close modal on button click
             $('.modal').hide();
@@ -188,12 +183,12 @@ export default {
     },
     checkForm: function(e) {
       if (
-        this.form.data.attributes.first_name &&
-        this.form.data.attributes.last_name &&
-        this.form.data.attributes.middle_name &&
-        this.form.data.attributes.phone &&
-        this.form.data.attributes.birthday &&
-        this.form.data.attributes.born_at) {
+        this.form.first_name &&
+        this.form.last_name &&
+        this.form.middle_name &&
+        this.form.phone &&
+        this.form.birthday &&
+        this.form.born_at) {
         this.submitForm()
       } else {
         alert("Будь ласка, заповніть всі поля")

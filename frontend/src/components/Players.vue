@@ -52,35 +52,35 @@
             <div class="form-group row">
               <label for="number" class="col-sm-3 col-form-label">Номер футболки:</label>
               <div class="col-sm-2">
-                <input type="number" class="form-control" id="number"  v-model="form.data.attributes.number">
+                <input type="number" class="form-control" id="number"  v-model="form.number">
               </div>
             </div>
 
             <div class="form-group row">
               <label for="first_name" class="col-sm-3 col-form-label">Призвіще:</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control" id="first_name" placeholder="Призвіще" v-model="form.data.attributes.first_name">
+                <input type="text" class="form-control" id="first_name" placeholder="Призвіще" v-model="form.first_name">
               </div>
             </div>
 
             <div class="form-group row">
               <label for="last_name" class="col-sm-3 col-form-label">Ім'я:</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control" id="last_name" placeholder="Ім'я" v-model="form.data.attributes.last_name">
+                <input type="text" class="form-control" id="last_name" placeholder="Ім'я" v-model="form.last_name">
               </div>
             </div>
 
             <div class="form-group row">
               <label for="middle_name" class="col-sm-3 col-form-label">По-батькові:</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control" id="middle_name" placeholder="По-батькові" v-model="form.data.attributes.middle_name">
+                <input type="text" class="form-control" id="middle_name" placeholder="По-батькові" v-model="form.middle_name">
               </div>
             </div>
 
             <div class="form-group row">
               <label for="role" class="col-sm-3 col-form-label">Амплуа:</label>
               <div class="col-sm-9">
-                <select class="custom-select" id="role" v-model="form.data.attributes.role">
+                <select class="custom-select" id="role" v-model="form.role">
 <!--                  <option selected>Виберіть амплуа</option>-->
                   <option value="OS">Діагональний</option>
                   <option value="OH">Догравальний</option>
@@ -94,41 +94,41 @@
             <div class="form-group row">
               <label for="example-date-input" class="col-sm-3 col-form-label">Дата народження: </label>
               <div class="col-sm-9">
-                <input class="form-control" type="date" value="2000-04-11" id="example-date-input" v-model="form.data.attributes.birthday">
+                <input class="form-control" type="date" value="2000-04-11" id="example-date-input" v-model="form.birthday">
               </div>
             </div>
 
             <div class="form-group row">
               <label for="born_at" class="col-sm-3 col-form-label">Місце народження:</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control" id="born_at" placeholder="Місце народження" v-model="form.data.attributes.born_at">
+                <input type="text" class="form-control" id="born_at" placeholder="Місце народження" v-model="form.born_at">
               </div>
             </div>
 
             <div class="form-row">
               <div class="form-group col-md-3">
                 <label for="weight">Вага в кг:</label>
-                <input type="number" class="form-control" id="weight" placeholder="Вага" v-model="form.data.attributes.weight">
+                <input type="number" class="form-control" id="weight" placeholder="Вага" v-model="form.weight">
               </div>
 
               <div class="form-group col-md-3">
                 <label for="height">Висота в см:</label>
-                <input type="number" class="form-control" id="height" placeholder="Висота" v-model="form.data.attributes.height">
+                <input type="number" class="form-control" id="height" placeholder="Висота" v-model="form.height">
               </div>
 
               <div class="form-group col-md-3">
                 <label for="attack">Висота атаки в см:</label>
-                <input type="number" class="form-control" id="attack" placeholder="Висота атаки" v-model="form.data.attributes.attack">
+                <input type="number" class="form-control" id="attack" placeholder="Висота атаки" v-model="form.attack">
               </div>
 
               <div class="form-group col-md-3">
                 <label for="block">Висота блоку в см:</label>
-                <input type="number" class="form-control" id="block" placeholder="Висота блоку" v-model="form.data.attributes.block">
+                <input type="number" class="form-control" id="block" placeholder="Висота блоку" v-model="form.block">
               </div>
             </div>
 
             <div class="d-flex justify-content-end">
-              <input class="form-check-input" type="checkbox" id="inlineCheckbox1" v-model="form.data.attributes.is_cap">
+              <input class="form-check-input" type="checkbox" id="inlineCheckbox1" v-model="form.is_cap">
               <label class="form-check-label" for="inlineCheckbox1">Капітан</label>
             </div>
 
@@ -153,7 +153,7 @@ import Modal from "@/components/Modal";
 import axios from 'axios';
 
 const headers = {
-  'Content-Type': 'application/vnd.api+json',
+  'Content-Type': 'application/json',
   'Authorization': 'Token ' + localStorage.getItem('auth_token')
 }
 
@@ -168,9 +168,6 @@ export default {
       players: '',
       player_button: '',
       form: {
-        data: {
-          "type": "players_list",
-          "attributes": {
             number: null,
             first_name: null,
             last_name: null,
@@ -186,8 +183,6 @@ export default {
             is_cap: false,
             team_name: sessionStorage.getItem("team_name"),
             team_uuid: sessionStorage.getItem("team_uuid")
-          }
-        }
       },
     }
   },
@@ -203,9 +198,9 @@ export default {
         url: this.store + "/api/v1/players/",
         method: "GET",
         success: (response) => {
-          this.players = response.data.response
+          this.players = response
           console.log(response)
-          if (response.data.response.length >= 18 || !sessionStorage.getItem("team_name")){
+          if (response.length >= 18 || !sessionStorage.getItem("team_name")){
             this.player_button = false
           } else {
             this.player_button = true
@@ -217,7 +212,7 @@ export default {
       axios.post(this.store + '/api/v1/players/', this.form, {headers: headers})
         .then((res) => {
           console.log(res)
-          if (res.data.data.status == true) {
+          if (res.data.status == true) {
             alert("Гравця успішно створено");
             // Close modal on button click
             $('#modal').hide();
@@ -235,16 +230,16 @@ export default {
     },
     checkForm: function(e) {
       if (
-        this.form.data.attributes.number &&
-        this.form.data.attributes.first_name &&
-        this.form.data.attributes.last_name &&
-        this.form.data.attributes.middle_name &&
-        this.form.data.attributes.role &&
-        this.form.data.attributes.weight &&
-        this.form.data.attributes.height &&
-        this.form.data.attributes.attack &&
-        this.form.data.attributes.block &&
-        this.form.data.attributes.born_at) {
+        this.form.number &&
+        this.form.first_name &&
+        this.form.last_name &&
+        this.form.middle_name &&
+        this.form.role &&
+        this.form.weight &&
+        this.form.height &&
+        this.form.attack &&
+        this.form.block &&
+        this.form.born_at) {
         this.submitForm()
       } else {
         alert("Будь ласка, заповніть всі поля")
