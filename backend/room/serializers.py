@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from room.models import Coach, Player, Team
+from room.models import Coach, Game, Player, Team
 from django.contrib.auth.models import User
 
 
@@ -43,11 +43,12 @@ class PlayerSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = Player
-        fields = (
-            'id', 'number', 'first_name', 'last_name', 'middle_name', 'role',
-            'birthday', 'weight', 'height', 'attack', 'block', 'born_at',
-            'uuid', 'user', 'team_name', 'team_uuid', 'is_active'
-        )
+        fields = "__all__"
+        #     (
+        #     'id', 'number', 'first_name', 'last_name', 'middle_name', 'role',
+        #     'birthday', 'weight', 'height', 'attack', 'block', 'born_at',
+        #     'uuid', 'user', 'team_name', 'team_uuid', 'is_active'
+        # )
 
 
 class PlayerPostSerializers(serializers.ModelSerializer):
@@ -87,3 +88,12 @@ class CoachPostSerializers(serializers.ModelSerializer):
             'birthday', 'born_at', 'phone',
             'team_name', 'team_uuid', 'is_active'
         )
+
+
+class GameSerializers(serializers.ModelSerializer):
+    """ Серіалізація гри """
+
+    class Meta:
+        model = Game
+        fields = '__all__'
+            # ('user', 'team_name', 'opponent_name', 'players', )

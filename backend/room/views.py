@@ -3,8 +3,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework import permissions
-from room.models import Coach, Team, Player
+from room.models import Coach, Game, Team, Player
 from room.serializers import (CoachSerializers,  CoachPostSerializers,
+                              GameSerializers,
                               PlayerPostSerializers, PlayerSerializers,
                               TeamPostSerializers, TeamSerializers)
 
@@ -156,3 +157,26 @@ def coach_detail(request, pk):
     elif request.method == 'DELETE':
         coach.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['GET', 'POST'])
+def games(request):
+    """
+    List all code snippets, or create a new snippet.
+    """
+    if request.method == 'GET':
+        snippets = Game.objects.all()
+        serializer = GameSerializers(snippets, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        game = GameSerializers(data=request.data)
+        profile = Game.objects.filter(user=request.user)
+        if game.is_valid():
+            if profile:
+                return Response({"status": "The team is not first"})
+            else:
+                game.save(user=request.user)
+            return Response({"status": True})
+        else:
+            return Response(game.errors)
