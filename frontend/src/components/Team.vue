@@ -133,11 +133,11 @@ export default {
       axios.post(this.store + '/api/v1/room/', this.form, {headers: headers})
         .then((res) => {
           console.log(res)
-          if (res.data.status == true) {
+          if (res.status == 200) {
             alert("Команду успішно створено");
             window.location.reload()
           } else {
-            alert("Сталась помилка");
+            alert("Сталась помилка" + res);
           }
         })
         .catch((error) => {

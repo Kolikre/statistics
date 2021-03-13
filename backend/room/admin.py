@@ -1,11 +1,11 @@
 from django.contrib import admin
-from room.models import (Action, Coach,
+from room.models import (Coach,
                          Game, Player,
-                         Set, Team)
+                         Team)
 
 
 class TeamAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'uuid')
+    list_display = ('name', 'uuid')
 
 
 admin.site.register(Team, TeamAdmin)
@@ -26,21 +26,7 @@ admin.site.register(Coach, CoachAdmin)
 
 
 class GameAdmin(admin.ModelAdmin):
-    list_display = ('team_name',)
+    list_display = ('team_name', 'opponent_name')
 
 
 admin.site.register(Game, GameAdmin)
-
-
-class ActionAdmin(admin.ModelAdmin):
-    list_display = ('user', 'set', 'player', )
-
-
-admin.site.register(Action, ActionAdmin)
-
-
-class SetAdmin(admin.ModelAdmin):
-    list_display = ('team_points', 'opponent_points', 'number', 'game')
-
-
-admin.site.register(Set, SetAdmin)
