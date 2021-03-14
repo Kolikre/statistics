@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
 
-    <div v-if="team">
+    <div v-if="team_name">
       <div>
         <h1>{{team_name}}</h1>
         <!--  localStorage.setItem("team_is_created", true)  -->
@@ -18,7 +18,7 @@
 
     <!-- MODAL WINDOW -->
 
-      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div  v-else class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -35,14 +35,14 @@
                 <div class="form-group row">
                   <label for="team_name" class="col-sm-4 col-form-label">Назва команди:</label>
                   <div class="col-sm-12">
-                    <input type="text" class="form-control" id="team-name" placeholder="Введіть назву" v-model="form.data.attributes.name">
+                    <input type="text" class="form-control" id="team_name" placeholder="Введіть назву" v-model="form.name">
                   </div>
                 </div>
 
                 <div class="form-group row">
                   <label for="role" class="col-sm-4 col-form-label">Ліга:</label>
                   <div class="col-sm-12">
-                    <select class="custom-select" id="role" v-model="form.data.attributes.league">с
+                    <select class="custom-select" id="role" v-model="form.league">с
                   <!--<option selected>Виберіть амплуа</option>-->
                       <option value="super">Супер</option>
                       <option value="high">Вища</option>
@@ -56,7 +56,7 @@
                 <div class="form-group row">
                   <label for="gender" class="col-sm-4 col-form-label">Виберіть стать:</label>
                   <div class="col-sm-12">
-                    <select class="custom-select" id="gender" v-model="form.data.attributes.gender">
+                    <select class="custom-select" id="gender" v-model="form.gender">
                   <!--<option selected>Виберіть амплуа</option>-->
                       <option value="W">Жінки</option>
                       <option value="M">Чоловіки</option>
@@ -86,7 +86,7 @@ import Modal from "@/components/Modal";
 import axios from 'axios';
 
 const headers = {
-  'Content-Type': 'application/vnd.api+json',
+  'Content-Type': 'application/json',
   'Authorization': 'Token ' + localStorage.getItem('auth_token')
 }
 
@@ -100,15 +100,10 @@ export default {
       team: '',
       team_name: '',
       form: {
-        data: {
-          "type": "teams",
-          "attributes": {
             name: null,
             league: null,
             gender: null
-          }
-        }
-      },
+      }
     }
   },
   created() {
@@ -123,13 +118,13 @@ export default {
         url: this.store + "/api/v1/room/",
         method: "GET",
         success: (response) => {
-          this.team = response.data.response
-          this.team_name = response.data.response[0].name
-          if (response.data.response == 0) {
-            this.team = false
+          console.log(response)
+          this.team_name = response[0].name
+          if (this.team_name === undefined) {
+            this.team_name = false
           } else {
-            sessionStorage.setItem("team_name", response.data.response[0].name)
-            sessionStorage.setItem("team_uuid", response.data.response[0].uuid)
+            sessionStorage.setItem("team_name", response[0].name)
+            sessionStorage.setItem("team_uuid", response[0].uuid)
           }
         }
       });
@@ -138,11 +133,11 @@ export default {
       axios.post(this.store + '/api/v1/room/', this.form, {headers: headers})
         .then((res) => {
           console.log(res)
-          if (res.data.data.status == true) {
+          if (res.status == 200) {
             alert("Команду успішно створено");
             window.location.reload()
           } else {
-            alert("Сталась помилка");
+            alert("Сталась помилка" + res);
           }
         })
         .catch((error) => {
@@ -152,7 +147,7 @@ export default {
       });
     },
     checkForm: function(e) {
-      if (this.form.data.attributes.name && this.form.data.attributes.league && this.form.data.attributes.gender) {
+      if (this.form.name && this.form.league && this.form.gender) {
         this.submitForm()
       } else {
         alert("Будь ласка, заповніть всі поля")

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from room.models import Coach, Player, Team
+from room.models import Coach, Game, Player, Team
 from django.contrib.auth.models import User
 
 
@@ -21,7 +21,7 @@ class TeamSerializers(serializers.ModelSerializer):
     class Meta:
         model = Team
         fields = (
-            'id', 'name', 'create_date', 'league', 'uuid',
+            'name', 'create_date', 'league', 'uuid',
             'gender', 'is_active', 'user'
         )
 
@@ -32,7 +32,7 @@ class TeamPostSerializers(serializers.ModelSerializer):
     class Meta:
         model = Team
         fields = (
-            'name', 'create_date', 'league', 'gender', 'id'
+            'name', 'create_date', 'league', 'gender'
         )
 
 
@@ -43,11 +43,12 @@ class PlayerSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = Player
-        fields = (
-            'id', 'number', 'first_name', 'last_name', 'middle_name', 'role',
-            'birthday', 'weight', 'height', 'attack', 'block', 'born_at',
-            'uuid', 'user', 'team_name', 'team_uuid', 'is_active'
-        )
+        fields = "__all__"
+        #     (
+        #     'id', 'number', 'first_name', 'last_name', 'middle_name', 'role',
+        #     'birthday', 'weight', 'height', 'attack', 'block', 'born_at',
+        #     'uuid', 'user', 'team_name', 'team_uuid', 'is_active'
+        # )
 
 
 class PlayerPostSerializers(serializers.ModelSerializer):
@@ -71,7 +72,7 @@ class CoachSerializers(serializers.ModelSerializer):
     class Meta:
         model = Coach
         fields = (
-            'id', 'first_name', 'last_name', 'middle_name',
+            'first_name', 'last_name', 'middle_name',
             'birthday', 'born_at', 'phone',
             'uuid', 'user', 'team_name', 'team_uuid', 'is_active'
         )
@@ -87,3 +88,24 @@ class CoachPostSerializers(serializers.ModelSerializer):
             'birthday', 'born_at', 'phone',
             'team_name', 'team_uuid', 'is_active'
         )
+
+
+class GameSerializers(serializers.ModelSerializer):
+    """ Серіалізація гри """
+
+    user = UserSerializers()
+    # players = PlayerSerializers()
+
+    class Meta:
+        model = Game
+        fields = "__all__"
+
+
+class GamePostSerializers(serializers.ModelSerializer):
+    """ Серіалізація гри """
+
+    class Meta:
+        model = Game
+        fields = ('team_name', 'opponent_name', 'set_number',
+                  'team_points', 'opponent_points', 'player_name',
+                  'player_uuid', 'action', 'action_time')
