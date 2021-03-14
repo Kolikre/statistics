@@ -1,13 +1,16 @@
 <template>
-  <div class="container" >
-    </br>
+  <div v-if="auth" class="container">
 
-    <!-- Button trigger modal -->
+    <div><Header></Header></div>
+
+    <!-- SITE BODY -->
+
+   <!-- Button trigger modal -->
     <button v-if="player_button" type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
       Додати нового гравця
     </button>
-    </br>
-    </br>
+    <br>
+    <br>
 
     <table class="table table-hover" >
       <thead>
@@ -37,121 +40,122 @@
     </table>
 
 
-   <div class="modal fade bd-example-modal-lg" id="modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Створення гравця</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Закрити">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-
-            <!-- MODAL CONTENT -->
-            <div class="form-group row">
-              <label for="number" class="col-sm-3 col-form-label">Номер футболки:</label>
-              <div class="col-sm-2">
-                <input type="number" class="form-control" id="number"  v-model="form.number">
-              </div>
+     <div class="modal fade bd-example-modal-lg" id="modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Створення гравця</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Закрити">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
+            <div class="modal-body">
 
-            <div class="form-group row">
-              <label for="first_name" class="col-sm-3 col-form-label">Призвіще:</label>
-              <div class="col-sm-9">
-                <input type="text" class="form-control" id="first_name" placeholder="Призвіще" v-model="form.first_name">
+              <!-- MODAL CONTENT -->
+              <div class="form-group row">
+                <label for="number" class="col-sm-3 col-form-label">Номер футболки:</label>
+                <div class="col-sm-2">
+                  <input type="number" class="form-control" id="number"  v-model="form.number">
+                </div>
               </div>
+
+              <div class="form-group row">
+                <label for="first_name" class="col-sm-3 col-form-label">Призвіще:</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="first_name" placeholder="Призвіще" v-model="form.first_name">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="last_name" class="col-sm-3 col-form-label">Ім'я:</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="last_name" placeholder="Ім'я" v-model="form.last_name">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="middle_name" class="col-sm-3 col-form-label">По-батькові:</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="middle_name" placeholder="По-батькові" v-model="form.middle_name">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="role" class="col-sm-3 col-form-label">Амплуа:</label>
+                <div class="col-sm-9">
+                  <select class="custom-select" id="role" v-model="form.role">
+  <!--                  <option selected>Виберіть амплуа</option>-->
+                    <option value="OS">Діагональний</option>
+                    <option value="OH">Догравальний</option>
+                    <option value="ST">Пасуючий</option>
+                    <option value="MB">Центральний блокуючий</option>
+                    <option value="LB">Ліберо</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="example-date-input" class="col-sm-3 col-form-label">Дата народження: </label>
+                <div class="col-sm-9">
+                  <input class="form-control" type="date" value="2000-04-11" id="example-date-input" v-model="form.birthday">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="born_at" class="col-sm-3 col-form-label">Місце народження:</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="born_at" placeholder="Місце народження" v-model="form.born_at">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-md-3">
+                  <label for="weight">Вага в кг:</label>
+                  <input type="number" class="form-control" id="weight" placeholder="Вага" v-model="form.weight">
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label for="height">Висота в см:</label>
+                  <input type="number" class="form-control" id="height" placeholder="Висота" v-model="form.height">
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label for="attack">Висота атаки в см:</label>
+                  <input type="number" class="form-control" id="attack" placeholder="Висота атаки" v-model="form.attack">
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label for="block">Висота блоку в см:</label>
+                  <input type="number" class="form-control" id="block" placeholder="Висота блоку" v-model="form.block">
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-end">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" v-model="form.is_cap">
+                <label class="form-check-label" for="inlineCheckbox1">Капітан</label>
+              </div>
+
             </div>
-
-            <div class="form-group row">
-              <label for="last_name" class="col-sm-3 col-form-label">Ім'я:</label>
-              <div class="col-sm-9">
-                <input type="text" class="form-control" id="last_name" placeholder="Ім'я" v-model="form.last_name">
-              </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Відміна</button>
+              <button type="button" class="btn btn-primary" @click="checkForm">Зберегти</button>
             </div>
-
-            <div class="form-group row">
-              <label for="middle_name" class="col-sm-3 col-form-label">По-батькові:</label>
-              <div class="col-sm-9">
-                <input type="text" class="form-control" id="middle_name" placeholder="По-батькові" v-model="form.middle_name">
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label for="role" class="col-sm-3 col-form-label">Амплуа:</label>
-              <div class="col-sm-9">
-                <select class="custom-select" id="role" v-model="form.role">
-<!--                  <option selected>Виберіть амплуа</option>-->
-                  <option value="OS">Діагональний</option>
-                  <option value="OH">Догравальний</option>
-                  <option value="ST">Пасуючий</option>
-                  <option value="MB">Центральний блокуючий</option>
-                  <option value="LB">Ліберо</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label for="example-date-input" class="col-sm-3 col-form-label">Дата народження: </label>
-              <div class="col-sm-9">
-                <input class="form-control" type="date" value="2000-04-11" id="example-date-input" v-model="form.birthday">
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label for="born_at" class="col-sm-3 col-form-label">Місце народження:</label>
-              <div class="col-sm-9">
-                <input type="text" class="form-control" id="born_at" placeholder="Місце народження" v-model="form.born_at">
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group col-md-3">
-                <label for="weight">Вага в кг:</label>
-                <input type="number" class="form-control" id="weight" placeholder="Вага" v-model="form.weight">
-              </div>
-
-              <div class="form-group col-md-3">
-                <label for="height">Висота в см:</label>
-                <input type="number" class="form-control" id="height" placeholder="Висота" v-model="form.height">
-              </div>
-
-              <div class="form-group col-md-3">
-                <label for="attack">Висота атаки в см:</label>
-                <input type="number" class="form-control" id="attack" placeholder="Висота атаки" v-model="form.attack">
-              </div>
-
-              <div class="form-group col-md-3">
-                <label for="block">Висота блоку в см:</label>
-                <input type="number" class="form-control" id="block" placeholder="Висота блоку" v-model="form.block">
-              </div>
-            </div>
-
-            <div class="d-flex justify-content-end">
-              <input class="form-check-input" type="checkbox" id="inlineCheckbox1" v-model="form.is_cap">
-              <label class="form-check-label" for="inlineCheckbox1">Капітан</label>
-            </div>
-
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Відміна</button>
-            <button type="button" class="btn btn-primary" @click="checkForm">Зберегти</button>
           </div>
         </div>
       </div>
-    </div>
 
+
+    </br>
+    </br>
 
   </div>
-
-
 </template>
 
-<script>
-import $ from "jquery"
-import Modal from "@/components/Modal";
-import axios from 'axios';
 
+<script>
+import Header from "@/components/Header";
+import $ from "jquery"
+import axios from 'axios';
 const headers = {
   'Content-Type': 'application/json',
   'Authorization': 'Token ' + localStorage.getItem('auth_token')
@@ -160,7 +164,7 @@ const headers = {
 export default {
   name: 'Players',
   components: {
-    Modal,
+    Header,
   },
   data() {
     return {
@@ -192,7 +196,28 @@ export default {
     });
     this.loadPlayers()
   },
+  computed: {
+    auth() {
+      if (localStorage.getItem("auth_token")){
+        return true
+      } else {
+        this.$router.push({name: "Login"})
+      }
+    },
+    team() {
+      if(localStorage.getItem("team_is_created")){
+        return true
+      } else {
+        return false
+      }
+    }
+  },
   methods: {
+    goLogout() {
+      localStorage.removeItem("auth_token")
+      window.location = "/"
+      window.location.reload();
+    },
     loadPlayers() {
       $.ajax({
         url: this.store + "/api/v1/players/",

@@ -1,6 +1,9 @@
 <template>
-  <div class="container" >
-    </br>
+  <div v-if="auth" class="container" >
+
+    <div><Header></Header></div>
+
+    <!-- SITE BODY -->
 
     <!-- Button trigger modal -->
     <button v-if="coach_button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
@@ -106,8 +109,9 @@
 
 <script>
 import $ from "jquery"
-import Modal from "@/components/Modal";
+import Header from "@/components/Header";
 import axios from 'axios';
+
 
 const headers = {
   'Content-Type': 'application/json',
@@ -117,7 +121,7 @@ const headers = {
 export default {
   name: 'Coaches',
   components: {
-    Modal,
+    Header,
   },
   data() {
     return {
@@ -145,7 +149,28 @@ export default {
     });
     this.loadCoaches()
   },
+  computed: {
+    auth() {
+      if (localStorage.getItem("auth_token")){
+        return true
+      } else {
+        this.$router.push({name: "Login"})
+      }
+    },
+    team() {
+      if(localStorage.getItem("team_is_created")){
+        return true
+      } else {
+        return false
+      }
+    }
+  },
   methods: {
+    goLogout() {
+      localStorage.removeItem("auth_token")
+      window.location = "/"
+      window.location.reload();
+    },
     loadCoaches() {
       $.ajax({
         url: this.store + "/api/v1/coaches/",
