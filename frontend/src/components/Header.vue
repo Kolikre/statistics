@@ -11,15 +11,13 @@
           <router-link class="nav-link" to="/" tag="button">Головна</router-link>
           <router-link class="nav-link" to="/players" tag="button">Список гравців</router-link>
           <router-link class="nav-link" to="/coaches" tag="button">Список тренерів</router-link>
-          <router-link class="nav-link"  to="/games" tag="button">Ігри</router-link>
+          <router-link class="nav-link"  to="/statistic" tag="button">Нова статистика</router-link>
         </div>
       </div>
       <button type="button" class=" float-right btn btn-outline-danger" v-if="auth" @click="goLogout">
         Вийти
       </button>
     </nav>
-    <p>{{team_name}}</p>
-    <!-- SITE BODY -->
     <br>
     <br>
   </div>
