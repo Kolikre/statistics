@@ -1,6 +1,7 @@
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 from rest_framework import status
+import json
 from rest_framework.decorators import api_view
 from rest_framework import permissions
 from room.models import Coach, Game, Team, Player
@@ -102,6 +103,38 @@ def player_detail(request, pk):
         serializer = PlayerPostSerializers(player, data=request.data)
         if serializer.is_valid():
             serializer.save()
+
+            def operation(pos, neg, tot):
+                if tot == 0:
+                    return 0
+                else:
+                    return int((pos - neg) / tot * 100)
+
+            p = Player.objects.get(pk=pk)
+            player = PlayerSerializers(player)
+
+            new_index_attack = operation(player.data["positive_attack"], player.data["negative_attack"], player.data[
+                "total_attack"])
+            p.index_attack = new_index_attack
+
+            new_index_block = operation(player.data["positive_block"], player.data["negative_block"], player.data[
+                "total_block"])
+            p.index_block = new_index_block
+
+            new_index_set = operation(player.data["positive_set"], player.data["negative_set"], player.data[
+                "total_set"])
+            p.index_set = new_index_set
+
+            new_index_dig = operation(player.data["positive_dig"], player.data["negative_dig"], player.data[
+                "total_dig"])
+            p.index_dig = new_index_dig
+
+            new_index_serve = operation(player.data["positive_serve"], player.data["negative_serve"], player.data[
+                "total_serve"])
+            p.index_serve = new_index_serve
+
+            p.save()
+
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
