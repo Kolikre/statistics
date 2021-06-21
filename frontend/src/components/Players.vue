@@ -28,7 +28,6 @@
       <tbody>
         <tr v-for="player in this.players">
           <th scope="row">{{player.number}}</th>
-          <td>{{player.first_name}} {{player.last_name}}</td>
           <td>{{player.role}}</td>
           <td>{{player.height}}</td>
           <td>{{player.weight}}</td>
@@ -289,8 +288,6 @@ export default {
     color: #000;
   }
 
-
-// utilities
 .overflow-hidden {
   overflow: hidden;
 }

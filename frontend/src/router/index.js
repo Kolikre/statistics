@@ -5,6 +5,8 @@ import Home from '@/components/Home'
 import Team from '@/components/Team'
 import Players from '@/components/Players'
 import Coaches from '@/components/Coaches'
+import Statistic from '@/components/Statistic'
+
 
 
 Vue.use(Router)
@@ -35,6 +37,11 @@ export default new Router({
       path: '/coaches',
       name: 'Coaches',
       component: Coaches
+    },
+    {
+      path: '/statistic',
+      name: 'Statistic',
+      component: Statistic
     }
   ]
 })
